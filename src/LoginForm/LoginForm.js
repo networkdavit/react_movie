@@ -13,9 +13,14 @@ const LoginForm = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-
-      const data = await response.json();
-      console.log(data);
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log('Login successful:', data);
+      } else if (response.status === 401) {
+        console.log('Unauthorized: Incorrect username or password');
+      } else {
+        console.error('Error:', response.status);
+      }
     } catch (error) {
       console.error(error);
     }
