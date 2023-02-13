@@ -3,11 +3,31 @@
     color: white;
     text-align: center;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .header-title {
     font-size: 1.5rem;
     font-weight: bold;
     margin: 0;
+  }
+  
+  .header-nav {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .header-nav li {
+    list-style: none;
+    margin: 0 1rem;
+  }
+  
+  .header-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
   }
   

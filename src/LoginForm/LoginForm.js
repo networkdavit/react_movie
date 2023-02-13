@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -16,6 +17,8 @@ const LoginForm = () => {
       if (response.status === 200) {
         const data = await response.json();
         console.log('Login successful:', data);
+        localStorage.setItem("access", data.access);
+        window.location.href = "/about";
       } else if (response.status === 401) {
         console.log('Unauthorized: Incorrect username or password');
       } else {
@@ -28,7 +31,6 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-    asdfasdfsafs
       <div>
         <label htmlFor="username">Username:</label>
         <input

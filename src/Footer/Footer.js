@@ -1,10 +1,13 @@
 import "./Footer.css";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+  
   return (
-    <header className="footer">
+    <footer className="footer">
       <h1 className="footer-title">My Footer</h1>
-    </header>
+      <p className="footer-copyright">Copyright &copy; {currentYear}</p>
+    </footer>
   );
 };
 
