@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 function Admin() {
-  console.log(localStorage.getItem('access'))
+  console.log(localStorage.getItem('access'), "asdfasfasfasdfasfasdfa")
   const [movies, setMovies] = useState([]);
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
@@ -108,6 +108,44 @@ function Admin() {
       .catch((error) => console.error(error));
   }
 
+
+
+  function handleDelete(id) {
+    const jwt = localStorage.getItem('access');
+    if (!jwt) {
+      console.log('JWT not found');
+      return;
+    }
+
+    // Send DELETE request to server using JWT in header
+    fetch(`http://localhost:8000/api/v1/movies/${id}/`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          return refreshToken().then((newToken) => {
+            // Retry request with new access token
+            return fetch(`http://localhost:8000/api/v1/movies/${id}/`, {
+              method: 'DELETE',
+              headers: {
+                Authorization: `Bearer ${newToken}`,
+              },
+            });
+          });
+        }
+        return response;
+      })
+      .then(() => {
+        // Update state to remove deleted movie
+        setMovies(movies.filter((movie) => movie.id !== id));
+      })
+      .catch((error) => console.error(error));
+  }
+
+
   return (
     <div>
       <h1>Admin Component</h1>
@@ -145,6 +183,14 @@ function Admin() {
         {movies.map((movie) => (
           <li key={movie.id}>
             {movie.title} ({movie.year}) - {movie.genre}
+            {/* <button
+              onClick={() =>
+                handleUpdate(movie.id, { title: 'New Title', year: '2022' })
+              }
+            >
+              Update
+            </button> */}
+            <button onClick={() => handleDelete(movie.id)}>Delete</button>
           </li>
         ))}
       </ul>
