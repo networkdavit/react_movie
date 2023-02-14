@@ -14,15 +14,15 @@ function Admin() {
       console.log('JWT not found');
       return;
     }
-
+    console.log(jwt)
     // Fetch movies from server using JWT in header
-    fetch('/api/movies', {
+    fetch('http://localhost:8000/api/v1/movies', {
       headers: {
         Authorization: `Bearer ${jwt}`,
       },
     })
       .then((response) => response.json())
-      .then((data) => setMovies(data))
+      .then((data) => setMovies(data.results))
       .catch((error) => console.error(error));
   }, []);
 
@@ -48,7 +48,7 @@ function Admin() {
     }
 
     // Send movie data to server using JWT in header
-    fetch('/api/movies', {
+    fetch('http://localhost:8000/api/v1/movies/', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -62,10 +62,15 @@ function Admin() {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data, "asdf")
+        console.log(data.results, "datares")
+        
         setMovies([...movies, data]);
         setTitle('');
         setGenre('');
         setYear('');
+        console.log(data , "asdftba")
+        console.log(movies, "moviess")
       })
       .catch((error) => console.error(error));
   }
