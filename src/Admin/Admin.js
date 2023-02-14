@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import './Admin.css';
 
 function Admin() {
   console.log(localStorage.getItem('access'), "asdfasfasfasdfasfasdfa")
@@ -6,7 +7,39 @@ function Admin() {
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
   const [year, setYear] = useState('');
+  const [editingMovie, setEditingMovie] = useState(null);
+  const titleRef = useRef("lkajsdfasdfa");
+  const yearRef = useRef(null);
+  const genreRef = useRef(null);
 
+  const handleEdit = (movie) => {
+    setEditingMovie(movie);
+  };
+
+  const handleCancel = () => {
+    setEditingMovie(null);
+  };
+
+  // const handleSave = (id) => {
+  //   handleUpdate(id, {
+  //     title: document.getElementById(`title-${id}`).value,
+  //     year: document.getElementById(`year-${id}`).value,
+  //     genre: document.getElementById(`genre-${id}`).value,
+  //   });
+  //   setEditingMovie(null);
+  // };
+  const handleSave = (id) => {
+    const titleInput = titleRef.current;
+    const yearInput = yearRef.current;
+    const genreInput = genreRef.current;
+
+    handleUpdate(id, {
+      title: titleInput.value,
+      year: yearInput.value,
+      genre: genreInput.value,
+    });
+    setEditingMovie(null);
+  };
   async function refreshToken() {
     try {
       const response = await fetch('http://localhost:8000/api/v1/auth/token/refresh/', {
@@ -109,6 +142,55 @@ function Admin() {
   }
 
 
+  function handleUpdate(id, updatedMovie) {
+    const jwt = localStorage.getItem('access');
+    if (!jwt) {
+      console.log('JWT not found');
+      return;
+    }
+
+    // Send PATCH request to server using JWT in header
+    fetch(`http://localhost:8000/api/v1/movies/${id}/`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedMovie),
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          return refreshToken().then((newToken) => {
+            // Retry request with new access token
+            return fetch(`http://localhost:8000/api/v1/movies/${id}/`, {
+              method: 'PATCH',
+              headers: {
+                Authorization: `Bearer ${newToken}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(updatedMovie),
+            });
+          });
+        }
+        return response;
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        const updatedMovies = movies.map((movie) => {
+          if (movie.id === id) {
+            return data;
+          }
+          return movie;
+        });
+        setMovies(updatedMovies);
+        setTitle('');
+        setGenre('');
+        setYear('');
+      })
+      .catch((error) => console.error(error));
+  }
+
+
 
   function handleDelete(id) {
     const jwt = localStorage.getItem('access');
@@ -150,47 +232,80 @@ function Admin() {
     <div>
       <h1>Admin Component</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title:</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={handleTitleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="genre">Genre:</label>
-          <input
-            type="text"
-            id="genre"
-            value={genre}
-            onChange={handleGenreChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="year">Year:</label>
-          <input
-            type="text"
-            id="year"
-            value={year}
-            onChange={handleYearChange}
-          />
-        </div>
-        <button type="submit">Add Movie</button>
+        {!editingMovie ? (
+          <>
+            <div>
+              <label htmlFor="title">Title:</label>
+              <input
+                type="text"
+                id="title"
+                value={title}
+                onChange={handleTitleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="genre">Genre:</label>
+              <input
+                type="text"
+                id="genre"
+                value={genre}
+                onChange={handleGenreChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="year">Year:</label>
+              <input
+                type="text"
+                id="year"
+                value={year}
+                onChange={handleYearChange}
+              />
+            </div>
+            <button type="submit">Add Movie</button>
+          </>
+        ) : (
+          <p>A movie is being edited, inputs are disabled.</p>
+        )}
+
       </form>
       <ul>
         {movies.map((movie) => (
           <li key={movie.id}>
-            {movie.title} ({movie.year}) - {movie.genre}
-            {/* <button
-              onClick={() =>
-                handleUpdate(movie.id, { title: 'New Title', year: '2022' })
-              }
-            >
-              Update
-            </button> */}
-            <button onClick={() => handleDelete(movie.id)}>Delete</button>
+
+            {editingMovie && editingMovie.id === movie.id ? (
+              <>
+                <input
+                  ref={titleRef}
+                  type="text"
+                  id={`title-${movie.id}`}
+                  defaultValue={movie.title}
+                  onChange={handleTitleChange}
+                />
+                <input
+                  ref={genreRef}
+                  type="text"
+                  id={`genre-${movie.id}`}
+                  defaultValue={movie.genre}
+                  onChange={handleGenreChange}
+                />
+                <input
+                  ref={yearRef}
+                  type="text"
+                  id={`year-${movie.id}`}
+                  defaultValue={movie.year}
+                  onChange={handleYearChange}
+                />
+
+                <button onClick={() => handleSave(movie.id)}>Save</button>
+                <button onClick={handleCancel}>Cancel</button>
+              </>
+            ) : (
+              <>
+                {movie.title} {movie.genre} -  {movie.year}
+                <button onClick={() => handleEdit(movie)}>Edit</button>
+                <button onClick={() => handleDelete(movie.id)}>Delete</button>
+              </>
+            )}
           </li>
         ))}
       </ul>
