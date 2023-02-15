@@ -29,9 +29,8 @@ function MoviesList() {
         <div className="movies-list">
           {movies.map(movie => (
             <div className="movie-box" key={movie.id}>
-              <h3>Title</h3>
-              <p>{movie.title}</p>
-              <h5>Release year</h5>
+              <h3>{movie.title}</h3>
+              <p>{movie.genre}</p>
               <p>{movie.year}</p>
             </div>
           ))}

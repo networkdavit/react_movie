@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import './Admin.css';
 
 function Admin() {
-  console.log(localStorage.getItem('access'), "asdfasfasfasdfasfasdfa")
   const [movies, setMovies] = useState([]);
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');

@@ -31,3 +31,22 @@
     font-size: 1.2rem;
   }
   
+  .link-button {
+    background: none;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .header-nav button {
+    background: none;
+    border: none;
+    text-decoration: underline;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  
+  
