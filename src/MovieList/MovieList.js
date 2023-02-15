@@ -29,8 +29,10 @@ function MoviesList() {
         <div className="movies-list">
           {movies.map(movie => (
             <div className="movie-box" key={movie.id}>
+              <img src={movie.imageUrl}/>
               <h3>{movie.title}</h3>
               <p>{movie.genre}</p>
+              <p>{movie.description}</p>
               <p>{movie.year}</p>
             </div>
           ))}

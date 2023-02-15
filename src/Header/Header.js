@@ -48,7 +48,7 @@ function Header() {
                     {isLoggedIn ? (
                         <>
                             <li>
-                                <Link to="/admin">Welcome Admin</Link>
+                                <Link to="/admin">Admin</Link>
                             </li>
                             <li>
                                 <button className="link-button" onClick={handleLogout}>Log Out</button>

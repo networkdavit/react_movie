@@ -5,11 +5,15 @@ function Admin() {
   const [movies, setMovies] = useState([]);
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
+  const [description, setDescription] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   const [year, setYear] = useState('');
   const [editingMovie, setEditingMovie] = useState(null);
-  const titleRef = useRef("lkajsdfasdfa");
+  const titleRef = useRef(null);
   const yearRef = useRef(null);
   const genreRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const imageUrlRef = useRef(null);
 
   const handleEdit = (movie) => {
     setEditingMovie(movie);
@@ -29,13 +33,17 @@ function Admin() {
   // };
   const handleSave = (id) => {
     const titleInput = titleRef.current;
+    const descriptionInput = descriptionRef.current;
     const yearInput = yearRef.current;
     const genreInput = genreRef.current;
+    const imageUrlInput = imageUrlRef.current;
 
     handleUpdate(id, {
       title: titleInput.value,
       year: yearInput.value,
       genre: genreInput.value,
+      description: descriptionRef.value,
+      imageUrl: imageUrlInput.value
     });
     setEditingMovie(null);
   };
@@ -99,6 +107,14 @@ function Admin() {
     setGenre(event.target.value);
   }
 
+  function handleDescriptioChange(event) {
+    setDescription(event.target.value);
+  }
+
+  function handleImageUrlChange(event) {
+    setImageUrl(event.target.value);
+  }
+
   function handleYearChange(event) {
     setYear(event.target.value);
   }
@@ -123,6 +139,8 @@ function Admin() {
         title,
         genre,
         year,
+        description,
+        imageUrl
       }),
     })
       .then((response) => response.json())
@@ -228,48 +246,12 @@ function Admin() {
 
 
   return (
-    <div>
-      <h1>Admin Component</h1>
-      <form onSubmit={handleSubmit}>
-        {!editingMovie ? (
-          <>
-            <div>
-              <label htmlFor="title">Title:</label>
-              <input
-                type="text"
-                id="title"
-                value={title}
-                onChange={handleTitleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="genre">Genre:</label>
-              <input
-                type="text"
-                id="genre"
-                value={genre}
-                onChange={handleGenreChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="year">Year:</label>
-              <input
-                type="text"
-                id="year"
-                value={year}
-                onChange={handleYearChange}
-              />
-            </div>
-            <button type="submit">Add Movie</button>
-          </>
-        ) : (
-          <p>A movie is being edited, inputs are disabled.</p>
-        )}
+    <div className='addMoviePosition'>
+      <h1>Welcome Admin</h1>
 
-      </form>
       <ul>
         {movies.map((movie) => (
-          <li key={movie.id}>
+          <li key={movie.id} className="movieList">
 
             {editingMovie && editingMovie.id === movie.id ? (
               <>
@@ -286,6 +268,20 @@ function Admin() {
                   id={`genre-${movie.id}`}
                   defaultValue={movie.genre}
                   onChange={handleGenreChange}
+                />
+                <input
+                  ref={descriptionRef}
+                  type="text"
+                  id={`description-${movie.description}`}
+                  defaultValue={movie.description}
+                  onChange={handleDescriptioChange}
+                />
+                <input
+                  ref={imageUrlRef}
+                  type="text"
+                  id={`imageUrl-${movie.imageUrl}`}
+                  defaultValue={movie.imageUrl}
+                  onChange={handleImageUrlChange}
                 />
                 <input
                   ref={yearRef}
@@ -308,6 +304,62 @@ function Admin() {
           </li>
         ))}
       </ul>
+      <form onSubmit={handleSubmit} className="test"
+      >
+        {!editingMovie ? (
+          <>
+          <h2>Create New Movie</h2>
+            <div>
+              <label htmlFor="title">Title:</label>
+              <input
+                type="text"
+                id="title"
+                value={title}
+                onChange={handleTitleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="genre">Genre:</label>
+              <input
+                type="text"
+                id="genre"
+                value={genre}
+                onChange={handleGenreChange}
+              />
+              <label htmlFor="description">Description:</label>
+              <input
+                type="text"
+                id="description"
+                value={description}
+                onChange={handleDescriptioChange}
+              />
+              <label htmlFor="imageUrl">Image URL:</label>
+              <input
+                type="text"
+                id="imageUrl"
+                value={imageUrl}
+                onChange={handleImageUrlChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="year">Year:</label>
+              <input
+                type="text"
+                id="year"
+                value={year}
+                onChange={handleYearChange}
+              />
+            </div>
+            <button className="addButton" type="submit">Add Movie</button>
+          </>
+        ) : (
+          <p>A movie is being edited, inputs are disabled.</p>
+        )}
+
+      </form>
+      <span className='distance'>
+
+      </span>
     </div>
   );
 }
