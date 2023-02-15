@@ -2,7 +2,7 @@ import "./Header.css";
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 
-const Header = () => {
+function Header() {
 
     const [isLoggedIn, setLoggedIn] = useState(false);
     useEffect(() => {

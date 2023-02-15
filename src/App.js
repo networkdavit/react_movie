@@ -5,6 +5,7 @@ import Footer from './Footer/Footer';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginForm from './LoginForm/LoginForm';
 import Admin from './Admin/Admin';
+import About from './About/About';
 
 function App() {
   const isAuthenticated = localStorage.getItem('access') !== null;
@@ -15,6 +16,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<MoviesList />} />
+          <Route path="/about" element={<About />} />
           {/* <Route path="/home" element={<Home/>} exact /> */}
           {/* <Route path="/services" element={<Services/>}  /> */}
           <Route path="/login" element={<LoginForm />} />
