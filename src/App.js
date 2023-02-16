@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginForm from './LoginForm/LoginForm';
 import Admin from './Admin/Admin';
 import About from './About/About';
+import Movie from './Movie/Movie';
 
 function App() {
   const isAuthenticated = localStorage.getItem('access') !== null;
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<MoviesList />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<LoginForm />} />
+          <Route path="/movie/:id" element={<Movie />} />
           <Route
             path="/admin"
             element={

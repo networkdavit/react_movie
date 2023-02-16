@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import "./LoginForm.css";
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -50,7 +50,7 @@ const LoginForm = () => {
           onChange={(event) => setPassword(event.target.value)}
         />
       </div>
-      <button type="submit">Login</button>
+      <button className="loginButton" type="submit">Login</button>
     </form>
   );
 };

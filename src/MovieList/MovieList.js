@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./MovieList.css";
 
 function MoviesList() {
@@ -30,7 +31,7 @@ function MoviesList() {
           {movies.map(movie => (
             <div className="movie-box" key={movie.id}>
               <img src={movie.imageUrl}/>
-              <h3>{movie.title}</h3>
+              <Link to={`movie/${movie.id}`}><h3>{movie.title}</h3></Link>
               <p>{movie.genre}</p>
               <p>{movie.description}</p>
               <p>{movie.year}</p>
