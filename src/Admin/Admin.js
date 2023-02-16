@@ -25,7 +25,7 @@ function Admin() {
 
   const handleSave = (id) => {
     const titleInput = titleRef.current;
-    const descriptionRef = descriptionRef.current;
+    const descriptionInput = descriptionRef.current;
     const yearInput = yearRef.current;
     const genreInput = genreRef.current;
     const imageUrlInput = imageUrlRef.current;
@@ -34,7 +34,7 @@ function Admin() {
       title: titleInput.value,
       year: yearInput.value,
       genre: genreInput.value,
-      description: descriptionRef.value,
+      description: descriptionInput.value,
       imageUrl: imageUrlInput.value
     });
     setEditingMovie(null);
@@ -300,7 +300,7 @@ function Admin() {
           </li>
         ))}
       </ul>
-      <form onSubmit={handleSubmit} className="test"
+      <form onSubmit={handleSubmit} className="movieList"
       >
         {!editingMovie ? (
           <>
