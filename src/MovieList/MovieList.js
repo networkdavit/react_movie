@@ -33,8 +33,6 @@ function MoviesList() {
               <img src={movie.imageUrl}/>
               <Link to={`movie/${movie.id}`}><h3>{movie.title}</h3></Link>
               <p>{movie.genre}</p>
-              <p>{movie.description}</p>
-              <p>{movie.year}</p>
             </div>
           ))}
         </div>

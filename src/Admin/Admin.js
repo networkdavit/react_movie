@@ -23,17 +23,9 @@ function Admin() {
     setEditingMovie(null);
   };
 
-  // const handleSave = (id) => {
-  //   handleUpdate(id, {
-  //     title: document.getElementById(`title-${id}`).value,
-  //     year: document.getElementById(`year-${id}`).value,
-  //     genre: document.getElementById(`genre-${id}`).value,
-  //   });
-  //   setEditingMovie(null);
-  // };
   const handleSave = (id) => {
     const titleInput = titleRef.current;
-    const descriptionInput = descriptionRef.current;
+    const descriptionRef = descriptionRef.current;
     const yearInput = yearRef.current;
     const genreInput = genreRef.current;
     const imageUrlInput = imageUrlRef.current;
@@ -152,6 +144,8 @@ function Admin() {
         setTitle('');
         setGenre('');
         setYear('');
+        setDescription('');
+        setImageUrl('');
         console.log(data, "asdftba")
         console.log(movies, "moviess")
       })
@@ -203,6 +197,8 @@ function Admin() {
         setTitle('');
         setGenre('');
         setYear('');
+        setDescription('');
+        setImageUrl('');
       })
       .catch((error) => console.error(error));
   }
