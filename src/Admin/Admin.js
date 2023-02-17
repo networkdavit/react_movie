@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import './Admin.css';
 
 function Admin() {
+  const user = localStorage.getItem("user");
   const [movies, setMovies] = useState([]);
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
@@ -243,7 +244,7 @@ function Admin() {
 
   return (
     <div>
-      <h1>Welcome Admin</h1>
+      <h1>Welcome {user}</h1>
 
       <ul>
         {movies.map((movie) => (
@@ -287,14 +288,14 @@ function Admin() {
                   onChange={handleYearChange}
                 />
 
-                <button onClick={() => handleSave(movie.id)}>Save</button>
-                <button onClick={handleCancel}>Cancel</button>
+                <button className='editDeleteCancelButton' onClick={() => handleSave(movie.id)}>Save</button>
+                <button className='editDeleteCancelButton' onClick={handleCancel}>Cancel</button>
               </>
             ) : (
               <>
                 {movie.title} {movie.genre} -  {movie.year}
-                <button onClick={() => handleEdit(movie)}>Edit</button>
-                <button onClick={() => handleDelete(movie.id)}>Delete</button>
+                <button className='editDeleteCancelButton' onClick={() => handleEdit(movie)}>Edit</button>
+                <button className='editDeleteCancelButton' onClick={() => handleDelete(movie.id)}>Delete</button>
               </>
             )}
           </li>

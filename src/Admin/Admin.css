@@ -40,6 +40,12 @@ input {
   margin: 0 auto;
 }
 
+.editDeleteCancelButton{
+  margin: 5px;
+  background-color: #ccc;
+  width: 50px;
+  height: 30px;
+}
 
 .distance {
   margin: 100px;

@@ -19,6 +19,7 @@ const LoginForm = () => {
         console.log('Login successful:', data);
         localStorage.setItem("access", data.access);
         localStorage.setItem("refresh", data.refresh);
+        localStorage.setItem("user", username);
         window.location.href = "/admin";
       } else if (response.status === 401) {
         console.log('Unauthorized: Incorrect username or password');

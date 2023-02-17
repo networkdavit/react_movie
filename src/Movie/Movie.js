@@ -34,9 +34,9 @@ function Movie() {
             <div>
                 <div className="container">
                   <img className="movieImg" alt="movie mage" src={movie.imageUrl}/>
-                  <p>{movie.genre}</p>
-                  <p>{movie.description}</p>
-                  <p>{movie.year}</p>
+                  <p>Genre: {movie.genre}</p>
+                  <p>Description: {movie.description}</p>
+                  <p>Release Year: {movie.year}</p>
                 </div>
 
             </div>
