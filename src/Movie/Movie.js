@@ -23,7 +23,7 @@ function Movie() {
                 setError(error);
                 setIsLoading(false);
             });
-    }, []);
+    }, [id]);
 
     return (
         <div >

@@ -30,7 +30,7 @@ function MoviesList() {
         <div className="movies-list">
           {movies.map(movie => (
             <div className="movie-box" key={movie.id}>
-              <img src={movie.imageUrl}/>
+              <img src={movie.imageUrl} alt=""/>
               <Link to={`movie/${movie.id}`}><h3>{movie.title}</h3></Link>
             </div>
           ))}
