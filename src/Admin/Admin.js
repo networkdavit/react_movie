@@ -242,7 +242,7 @@ function Admin() {
 
 
   return (
-    <div className='addMoviePosition'>
+    <div>
       <h1>Welcome Admin</h1>
 
       <ul>

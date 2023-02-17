@@ -16,7 +16,6 @@ function Movie() {
             .then(data => {
                 if (data) {
                     setMovie(data);
-                    console.log(data);
                 }
                 setIsLoading(false);
             })
@@ -32,9 +31,9 @@ function Movie() {
           {isLoading ? (
             <p>Loading ...</p>
           ) : (
-            <div >
-                <div >
-                  <img src={movie.imageUrl}/>
+            <div>
+                <div className="container">
+                  <img className="movieImg" alt="movie mage" src={movie.imageUrl}/>
                   <p>{movie.genre}</p>
                   <p>{movie.description}</p>
                   <p>{movie.year}</p>
