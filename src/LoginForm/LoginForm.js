@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import api_endpoints from '../constants';
 import "./LoginForm.css";
 
 const LoginForm = () => {
@@ -9,7 +10,7 @@ const LoginForm = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/api/v1/auth/token/', {
+      const response = await fetch(api_endpoints.token, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),

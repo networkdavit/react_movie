@@ -1,6 +1,7 @@
 import "./Movie.css";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import api_endpoints from "../constants";
 
 function Movie() {
 
@@ -11,7 +12,7 @@ function Movie() {
 
     useEffect(() => {
         setIsLoading(true);
-        fetch(`http://localhost:8000/api/v1/movies/${id}`)
+        fetch(api_endpoints.movies + id)
             .then(res => res.json())
             .then(data => {
                 if (data) {

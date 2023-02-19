@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './Admin.css';
+import api_endpoints from '../constants';
 
 function Admin() {
   const user = localStorage.getItem("user");
@@ -42,7 +43,7 @@ function Admin() {
   };
   async function refreshToken() {
     try {
-      const response = await fetch('http://localhost:8000/api/v1/auth/token/refresh/', {
+      const response = await fetch(api_endpoints.refresh_token, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refresh: localStorage.getItem('refresh') }),
@@ -69,7 +70,7 @@ function Admin() {
     }
 
     // Fetch movies from server using JWT in header
-    fetch('http://localhost:8000/api/v1/movies', {
+    fetch(api_endpoints.movies, {
       headers: {
         Authorization: `Bearer ${jwt}`,
       },
@@ -78,7 +79,7 @@ function Admin() {
         if (response.status === 401) {
           return refreshToken().then((newToken) => {
             // Retry request with new access token
-            return fetch('http://localhost:8000/api/v1/movies', {
+            return fetch(api_endpoints.movies, {
               headers: {
                 Authorization: `Bearer ${newToken}`,
               },
@@ -122,7 +123,7 @@ function Admin() {
     }
 
     // Send movie data to server using JWT in header
-    fetch('http://localhost:8000/api/v1/movies/', {
+    fetch(api_endpoints.movies, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -162,7 +163,7 @@ function Admin() {
     }
 
     // Send PATCH request to server using JWT in header
-    fetch(`http://localhost:8000/api/v1/movies/${id}/`, {
+    fetch(api_endpoints.movies + id + "/", {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -174,7 +175,7 @@ function Admin() {
         if (response.status === 401) {
           return refreshToken().then((newToken) => {
             // Retry request with new access token
-            return fetch(`http://localhost:8000/api/v1/movies/${id}/`, {
+            return fetch(api_endpoints.movies + id + "/", {
               method: 'PATCH',
               headers: {
                 Authorization: `Bearer ${newToken}`,
@@ -214,7 +215,7 @@ function Admin() {
     }
 
     // Send DELETE request to server using JWT in header
-    fetch(`http://localhost:8000/api/v1/movies/${id}/`, {
+    fetch(api_endpoints.movies + id + "/", {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -224,7 +225,7 @@ function Admin() {
         if (response.status === 401) {
           return refreshToken().then((newToken) => {
             // Retry request with new access token
-            return fetch(`http://localhost:8000/api/v1/movies/${id}/`, {
+            return fetch(api_endpoints.movies + id + "/", {
               method: 'DELETE',
               headers: {
                 Authorization: `Bearer ${newToken}`,

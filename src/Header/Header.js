@@ -1,6 +1,7 @@
 import "./Header.css";
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
+import api_endpoints from "../constants";
 
 function Header() {
 
@@ -12,7 +13,7 @@ function Header() {
             return;
         }
 
-        fetch('http://localhost:8000/api/v1/auth/verify-token/', {
+        fetch(api_endpoints.verify_token, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${jwt}`,
